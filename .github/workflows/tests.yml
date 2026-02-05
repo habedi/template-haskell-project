@@ -3,6 +3,8 @@ name: Run Tests
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
     paths-ignore:
@@ -19,7 +21,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -44,15 +46,18 @@ jobs:
             ${{ runner.os }}-stack-
 
       - name: Install Tools
-        run: stack install hlint fourmolu
+        run: stack install hlint fourmolu hpc-codecov
 
       - name: Build Project
         run: make build
 
-      - name: Run Tests
-        run: make test
+      - name: Run Tests with Coverage
+        run: |
+          stack exec -- hpc-codecov stack:template-haskell-project-test -o codecov.json
 
-      - name: Upload coverage reports to Codecov
+      - name: Upload Coverage Reports to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: codecov.json
+          fail_ci_if_error: false

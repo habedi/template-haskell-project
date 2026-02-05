@@ -2,26 +2,18 @@
 # Configuration and Variables
 ################################################################################
 STACK         ?= stack
-GHC_VERSION   := $(shell $(STACK) ghc -- --version 2>/dev/null | head -n1 || echo "GHC not found")
-BUILD_TYPE    ?= dev
 JOBS          ?= $(shell nproc || echo 2)
 SRC_DIR       := src
 APP_DIR       := app
 TEST_DIR      := test
 BUILD_DIR     := .stack-work
-DOC_OUT       := docs/api/
-COVERAGE_DIR  := coverage
-BINARY_NAME   := template-haskell-project
-PREFIX        ?= /usr/local
-
-SHELL         := /usr/bin/env bash
-.SHELLFLAGS   := -eu -o pipefail -c
+DOC_OUT       := docs/haskell
 
 ################################################################################
 # Targets
 ################################################################################
 
-.PHONY: all build rebuild run test cov lint format doc clean install-deps release help coverage ghci repl setup-hooks test-hooks
+.PHONY: all build rebuild run test cov lint format doc clean install-deps release help coverage repl setup-hooks test-hooks
 
 .DEFAULT_GOAL := help
 
@@ -37,7 +29,7 @@ build: ## Build project
 rebuild: clean build  ## clean and build
 
 run: build  ## Run the main application
-	@echo "Running $(BINARY_NAME)..."
+	@echo "Running the application..."
 	$(STACK) run --
 
 test: ## Run tests
@@ -48,16 +40,16 @@ release: ## Build optimized release binary
 	@echo "Building the project in Release mode..."
 	$(STACK) build --ghc-options="-O2"
 
-clean: ## Remove build artifacts, cache directories, and generated docs
-	@echo "Removing build artifacts, cache, generated docs, and coverage files..."
-	rm -rf $(BUILD_DIR) $(DOC_OUT) $(COVERAGE_DIR)
+clean: ## Remove build artifacts, cache directories, etc.
+	@echo "Removing build artifacts, cache, generated docs, etc."
+	rm -rf $(BUILD_DIR) $(DOC_OUT)
 	$(STACK) clean
 
-lint: ## Check code with HLint
+lint: ## Run linter checks on Haskell source files
 	@echo "Running HLint..."
 	$(STACK) exec -- hlint $(SRC_DIR) $(APP_DIR) $(TEST_DIR)
 
-format: ## Format Haskell files with Fourmolu
+format: ## Format Haskell source files in-place
 	@echo "Formatting Haskell files..."
 	$(STACK) exec -- fourmolu -i $(SRC_DIR) $(APP_DIR) $(TEST_DIR)
 
@@ -65,7 +57,7 @@ format-check: ## Check formatting without modifying files
 	@echo "Checking Haskell formatting..."
 	$(STACK) exec -- fourmolu --mode check $(SRC_DIR) $(APP_DIR) $(TEST_DIR)
 
-doc: ## Generate Haddock documentation
+doc: ## Generate documentation using for the project
 	@echo "Generating documentation to $(DOC_OUT)..."
 	$(STACK) haddock --no-haddock-deps
 	@mkdir -p $(DOC_OUT)
@@ -82,11 +74,9 @@ coverage: ## Generate code coverage report
 	$(STACK) test --coverage
 	@echo "Coverage report generated. Check .stack-work/install/*/hpc/"
 
-ghci: ## Start GHCi with project loaded
+repl: ## Start GHCi with project loaded
 	@echo "Starting GHCi..."
 	$(STACK) ghci
-
-repl: ghci ## Alias for ghci
 
 setup-hooks: ## Install Git hooks (pre-commit and pre-push)
 	@echo "Installing Git hooks..."

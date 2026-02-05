@@ -5,8 +5,8 @@ Contributions are always welcome and appreciated.
 
 ### How to Contribute
 
-Please check the [issue tracker](https://github.com/habedi/template-haskell-project/issues) to see if there is an issue you
-would like to work on or if it has already been resolved.
+Please check the [issue tracker](https://github.com/habedi/template-haskell-project/issues) to see if there is an issue
+you would like to work on or if it has already been resolved.
 
 #### Reporting Bugs
 
@@ -20,7 +20,7 @@ would like to work on or if it has already been resolved.
 
 ### Submitting Pull Requests
 
-- Ensure all tests pass before submitting a pull request.
+- Make sure all tests pass before submitting a pull request.
 - Write a clear description of the changes you made and the reasons behind them.
 
 > [!IMPORTANT]
@@ -30,14 +30,8 @@ would like to work on or if it has already been resolved.
 
 #### Prerequisites
 
-Install Stack on your system if it's not already installed.
-
-```shell
-## Install Stack (works on most Unix-like systems)
-curl -sSL https://get.haskellstack.org/ | sh
-```
-
-- Use the `make install-deps` command to install the development dependencies.
+Make sure GNU Make is installed on your system.
+Then use the `make install-deps` command to install the development dependencies (like Stack and Fourmolu).
 
 #### Code Style
 

@@ -3,13 +3,19 @@ name: Run Linter Checks
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
   pull_request:
     branches:
       - main
     paths-ignore:
       - '**.md'
+      - 'docs/**'
 
 permissions:
   contents: read
