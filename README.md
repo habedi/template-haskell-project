@@ -10,9 +10,11 @@
 [![Tests](https://img.shields.io/github/actions/workflow/status/habedi/template-haskell-project/tests.yml?label=tests&style=flat&labelColor=282c34&logo=github)](https://github.com/habedi/template-haskell-project/actions/workflows/tests.yml)
 [![Lints](https://img.shields.io/github/actions/workflow/status/habedi/template-haskell-project/lints.yml?label=lints&style=flat&labelColor=282c34&logo=github)](https://github.com/habedi/template-haskell-project/actions/workflows/lints.yml)
 [![Code Coverage](https://img.shields.io/codecov/c/github/habedi/template-haskell-project?label=coverage&style=flat&labelColor=282c34&logo=codecov)](https://codecov.io/gh/habedi/template-haskell-project)
-[![Docs](https://img.shields.io/badge/docs-latest-007ec6?label=docs&style=flat&labelColor=282c34&logo=readthedocs)](docs)
+[![Docs](https://img.shields.io/badge/docs-read-007ec6?label=docs&style=flat&labelColor=282c34&logo=readthedocs)](docs)
 [![License](https://img.shields.io/badge/license-MIT-007ec6?label=license&style=flat&labelColor=282c34&logo=open-source-initiative)](https://github.com/habedi/template-haskell-project/blob/main/LICENSE)
 [![Release](https://img.shields.io/github/release/habedi/template-haskell-project.svg?label=release&style=flat&labelColor=282c34&logo=github)](https://github.com/habedi/template-haskell-project/releases/latest)
+
+---
 
 This is a template for Haskell projects.
 It provides a minimalistic project structure with pre-configured GitHub Actions, Makefile, and a few useful
